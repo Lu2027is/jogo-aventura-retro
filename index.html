@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sombra dos Anos 80 - RPG de Texto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="terminal-container">
+        <!-- Áudio de Fundo -->
+        <audio id="bg-music" loop>
+            <source src="musica.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Barra Superior / Controlo de Áudio -->
+        <header class="terminal-header">
+            <span>[ SYSTEM OPERATING v1.984 ]</span>
+            <button onclick="toggleSound()" id="sound-btn">🔊 LIGAR ÁUDIO DE SUSPENSE</button>
+        </header>
+
+        <!-- Ecrã do Jogo -->
+        <main class="terminal-body">
+            <div id="game-text" class="typing-effect">
+                > INICIALIZANDO SISTEMA...<br>
+                > ANO: 1984.<br>
+                > LOCALIZAÇÃO: Laboratório Subterrâneo Abandonado.<br><br>
+                Acordas numa sala escura. As luzes fluorescerem em intermitência. À tua frente há uma porta de ferro pesada e, à esquerda, um terminal de computador a piscar com um código estranho...
+            </div>
+
+            <!-- Botões de Decisão -->
+            <div id="choices-container" class="choices">
+                <button onclick="makeChoice(1)">🚪 Tentar abrir a porta de ferro</button>
+                <button onclick="makeChoice(2)">💻 Examinar o terminal a piscar</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Lógica de Som
+        const music = document.getElementById('bg-music');
+        const soundBtn = document.getElementById('sound-btn');
+
+        function toggleSound() {
+            if (music.paused) {
+                music.play();
+                soundBtn.textContent = '🔇 PAUSAR ÁUDIO';
+            } else {
+                music.pause();
+                soundBtn.textContent = '🔊 LIGAR ÁUDIO DE SUSPENSE';
+            }
+        }
+
+        // Lógica da Aventura em Texto
+        function makeChoice(option) {
+            const textElem = document.getElementById('game-text');
+            const choicesElem = document.getElementById('choices-container');
+
+            if (option === 1) {
+                textElem.innerHTML = `> A porta de ferro está trancada! Um alarme ecoa ao fundo.<br><br>Ouve-se um ruído nos condutos de ventilação... O que fazes agora?`;
+                choicesElem.innerHTML = `
+                    <button onclick="makeChoice(3)">🔦 Procurar uma conduta para fugir</button>
+                    <button onclick="makeChoice(2)">💻 Correr para o terminal de computador</button>
+                `;
+            } else if (option === 2) {
+                textElem.innerHTML = `> No ecrã verde do computador lê-se: 'CÓDIGO DE ACESSO NECESSÁRIO: 1984'.<br><br>Introduzes o código e a porta principal abre-se lentamente com um rangido metálico!`;
+                choicesElem.innerHTML = `
+                    <button onclick="makeChoice(4)">🏃 Correr para a saída</button>
+                    <button onclick="makeChoice(3)">🔍 Explorar a sala seguinte</button>
+                `;
+            } else if (option === 3) {
+                textElem.innerHTML = `> Encontraste um diário antigo com anotações secretas sobre a experiência 84...<br><br><strong>PARABÉNS! Descobriste o mistério principal. (FIM DA DEMO)</strong>`;
+                choicesElem.innerHTML = `<button onclick="location.reload()">🔄 Reiniciar Jogo</button>`;
+            } else if (option === 4) {
+                textElem.innerHTML = `> Escapaste do laboratório para a noite chuvosa de 1984.<br><br><strong>CONSEGUISTE FUGIR! (FIM DA DEMO)</strong>`;
+                choicesElem.innerHTML = `<button onclick="location.reload()">🔄 Reiniciar Jogo</button>`;
+            }
+        }
+    </script>
+</body>
+</html>
